@@ -2,15 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ABDownLoader : MonoBehaviour {
+public class ABDownLoader : MonoBehaviour{
 
     private List<ABHandler> m_Handlers;
 
-    void Start()
-    {
-        InitABList();
-        StartCoroutine(DownloadAndCacheABList());
-    }
 
     private void InitABList() {
         m_Handlers = new List<ABHandler>();
@@ -18,9 +13,11 @@ public class ABDownLoader : MonoBehaviour {
         m_Handlers.Add(new DefaultAB());
     }
 
-    private IEnumerator DownloadAndCacheABList() {
+    public IEnumerator DownloadAndCacheABList() {
+        InitABList();
+
         for (int i = 0; i < m_Handlers.Count; i++) {
-            yield return DownloadAndCache(m_Handlers[i]);
+            yield return StartCoroutine(DownloadAndCache(m_Handlers[i]));
         }
     }
 

@@ -4,13 +4,30 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 
-public class ABToolSet
+public class ABToolSet : AssetPostprocessor
 {
-    public static void BuildAllAssetBundles()
+    /// <summary>
+    /// 监听AB变化
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="previous"></param>
+    /// <param name="next"></param>
+    private void OnPostprocessAssetbundleNameChanged(string path, string previous, string next)
     {
-        BuildPipeline.BuildAssetBundles("Assets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+        Debug.Log("AB: " + path + " old: " + previous + " new: " + next);
     }
 
+    /// <summary>
+    /// 打包
+    /// </summary>
+    public static void BuildAllAssetBundles()
+    {
+        BuildPipeline.BuildAssetBundles("Assets/" + Global.abDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+    }
+
+    /// <summary>
+    /// 获取AB Name
+    /// </summary>
     public static void GetNames()
     {
         var names = AssetDatabase.GetAllAssetBundleNames();
@@ -18,9 +35,11 @@ public class ABToolSet
             Debug.Log("AssetBundle: " + name);
     }
 
+    /// <summary>
+    /// 生成Json对比文件
+    /// </summary>
     public static void GenABCompareFile() {
-        string dir = Path.Combine(Application.dataPath, "AssetBundles");
-        string assetBundlePath = Path.Combine(dir, "AssetBundles");
+        string assetBundlePath = Path.Combine(Application.dataPath, Global.abDirBundle);
 
         AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
         if (assetBundle == null)
@@ -34,10 +53,12 @@ public class ABToolSet
         assetBundle.Unload(false);
     }
 
+    /// <summary>
+    /// 生成文件
+    /// </summary>
+    /// <param name="abManif"></param>
     private static void GenFile(AssetBundleManifest abManif) {
-        string dir = Path.Combine(Application.dataPath, "AssetBundles");
-        string filePath = Path.Combine(dir, "ABCompare.json");
-
+        string filePath = Path.Combine(Application.dataPath, Global.abCompareFile);
 
         FileStream fs = new FileStream(filePath, FileMode.Create);
         StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
@@ -60,11 +81,12 @@ public class ABToolSet
         fs.Close();
     }
 
+    /// <summary>
+    /// 读取Json对比文件
+    /// </summary>
     public static void ReadABCompareFile()
     {
-        string dir = Path.Combine(Application.dataPath, "AssetBundles");
-        string filePath = Path.Combine(dir, "ABCompare.json");
-
+        string filePath = Path.Combine(Application.dataPath, Global.abCompareFile);
 
         try
         {
