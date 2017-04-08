@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
+using System;
 
 public class CreateAssetBundles
 {
@@ -37,25 +39,49 @@ public class CreateAssetBundles
 
     private static void GenFile(AssetBundleManifest abManif) {
         string dir = Path.Combine(Application.dataPath, "AssetBundles");
-        string filePath = Path.Combine(dir, "ABCompare.txt");
+        string filePath = Path.Combine(dir, "ABCompare.json");
 
-        SaveCSVData saveCSVData = new SaveCSVData();
+
         FileStream fs = new FileStream(filePath, FileMode.Create);
-        saveCSVData.Open(fs);
+        StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
 
-        saveCSVData.cat("ab");
-        saveCSVData.cat("hash");
-        saveCSVData.newRow();
-
+        ABHashCollection abHashCollection = new ABHashCollection();
+        ABHashInfo abHashInfo = new ABHashInfo();
         string[] abs = abManif.GetAllAssetBundles();
         for (int i = 0; i < abs.Length; i++)
         {
-            saveCSVData.cat(abs[i]);
-            saveCSVData.cat(abManif.GetAssetBundleHash(abs[i]).ToString());
-            saveCSVData.newRow();
+            abHashInfo.ab = abs[i];
+            abHashInfo.hash = abManif.GetAssetBundleHash(abs[i]).ToString();
+            abHashCollection.abHashList.Add(abHashInfo);
         }
 
-        saveCSVData.Save();
+        string jsonStr = JsonUtility.ToJson(abHashCollection);
+        Debug.Log(jsonStr);
+        mStreamWriter.Write(jsonStr);
+
+        mStreamWriter.Close();
         fs.Close();
     }
+
+    [MenuItem("Assets/ReadABCompareFile")]
+    public static void ReadABCompareFile()
+    {
+        string dir = Path.Combine(Application.dataPath, "AssetBundles");
+        string filePath = Path.Combine(dir, "ABCompare.json");
+
+
+        try
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            StreamReader streamReader = new StreamReader(fs);
+
+            string jsonStr = streamReader.ReadToEnd();
+            ABHashCollection abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
+        }
+        catch (Exception e) {
+            Debug.LogError(e.Message);
+        }
+    }
 }
+
+
