@@ -4,15 +4,13 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 
-public class CreateAssetBundles
+public class ABToolSet
 {
-    [MenuItem("Assets/Build AssetBundles")]
     public static void BuildAllAssetBundles()
     {
         BuildPipeline.BuildAssetBundles("Assets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
     }
 
-    [MenuItem("Assets/Get AssetBundle names")]
     public static void GetNames()
     {
         var names = AssetDatabase.GetAllAssetBundleNames();
@@ -20,7 +18,6 @@ public class CreateAssetBundles
             Debug.Log("AssetBundle: " + name);
     }
 
-    [MenuItem("Assets/GenABCompareFile")]
     public static void GenABCompareFile() {
         string dir = Path.Combine(Application.dataPath, "AssetBundles");
         string assetBundlePath = Path.Combine(dir, "AssetBundles");
@@ -56,14 +53,13 @@ public class CreateAssetBundles
         }
 
         string jsonStr = JsonUtility.ToJson(abHashCollection);
-        Debug.Log(jsonStr);
+        Debug.Log("Gen Json Success: " + jsonStr);
         mStreamWriter.Write(jsonStr);
 
         mStreamWriter.Close();
         fs.Close();
     }
 
-    [MenuItem("Assets/ReadABCompareFile")]
     public static void ReadABCompareFile()
     {
         string dir = Path.Combine(Application.dataPath, "AssetBundles");
@@ -76,6 +72,7 @@ public class CreateAssetBundles
             StreamReader streamReader = new StreamReader(fs);
 
             string jsonStr = streamReader.ReadToEnd();
+            Debug.Log("Read Json Success: " + jsonStr);
             ABHashCollection abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
         }
         catch (Exception e) {

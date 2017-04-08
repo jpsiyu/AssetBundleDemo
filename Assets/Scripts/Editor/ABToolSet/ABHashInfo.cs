@@ -17,3 +17,9 @@ public class ABHashCollection
     public List<ABHashInfo> abHashList = new List<ABHashInfo>();
 
 }
+
+public enum ABBuildPlatform { 
+    Win64,
+    Android,
+    IOS,
+}
