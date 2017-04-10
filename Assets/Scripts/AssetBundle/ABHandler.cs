@@ -11,10 +11,15 @@ public abstract class ABHandler
 public class ConfigAB : ABHandler
 {
     private Dictionary<string, Object> m_ObjectDict = new Dictionary<string,Object>();
+    private string mABName;
+
+    public ConfigAB(string abName) {
+        mABName = abName;
+    }
 
     public override string ABName()
     {
-        return "config";
+        return mABName;
     }
 
     public override void Handle(AssetBundle ab)
@@ -28,10 +33,16 @@ public class DefaultAB : ABHandler
 {
 
     private Dictionary<string, Hash128> m_BundleHashCode;
+    private string mABName;
+
+    public DefaultAB(string abName) {
+
+        mABName = abName;
+    }
 
     public override string ABName()
     {
-        return "AssetBundles";
+        return mABName;
     }
 
     public override void Handle(AssetBundle ab)

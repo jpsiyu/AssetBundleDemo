@@ -26,8 +26,10 @@ public class ABHashCollection
             tempS = serverABHashCollection.abHashList[i];
 
             clientABHashDict.TryGetValue(tempS.ab, out tempC);
-            if(tempC == null || !tempS.hash.Equals(tempC.hash))
+            if (tempC == null || !tempS.hash.Equals(tempC.hash)) {
                 modifyABList.Add(tempS.ab);
+                ABUtil.Log(string.Format("modify ab: {0}", tempS.ab));
+            }
         }
         return modifyABList;
     }

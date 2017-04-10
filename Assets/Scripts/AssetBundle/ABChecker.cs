@@ -6,6 +6,12 @@ using System.Collections.Generic;
 public class ABChecker : MonoBehaviour {
     private ABHashCollection mServerHashCollection;
     private ABHashCollection mClientHashCollection;
+    private List<string> mModifyABs;
+
+    public List<string> ModifyABs
+    {
+        get { return mModifyABs; }
+    }
 
     public IEnumerator StartCheck()
     {
@@ -23,7 +29,7 @@ public class ABChecker : MonoBehaviour {
     }
 
     private void CalModifyABs() {
-        List<string> modifyABs = mClientHashCollection.CalModifyAB(mServerHashCollection);
+        mModifyABs = mClientHashCollection.CalModifyAB(mServerHashCollection);
     }
 
     private void GenServerJsonCollection(byte[] jsonBytes) {

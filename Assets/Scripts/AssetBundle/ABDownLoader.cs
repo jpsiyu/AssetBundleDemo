@@ -3,26 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ABDownLoader : MonoBehaviour{
+    private ABHandler mABHandler;
 
-    private List<ABHandler> m_Handlers;
+    public IEnumerator DownloadAndCacheABList(List<string> modifyABs) {
 
-
-    private void InitABList() {
-        m_Handlers = new List<ABHandler>();
-        m_Handlers.Add(new ConfigAB());
-        m_Handlers.Add(new DefaultAB());
-    }
-
-    public IEnumerator DownloadAndCacheABList() {
-        InitABList();
-
-        for (int i = 0; i < m_Handlers.Count; i++) {
-            yield return StartCoroutine(DownloadAndCache(m_Handlers[i]));
+        for (int i = 0; i < modifyABs.Count; i++) {
+            if (modifyABs[i].Equals(ABGlobal.abDir))
+                mABHandler = new DefaultAB(modifyABs[i]);
+            else
+                mABHandler = new ConfigAB(modifyABs[i]);
+            yield return StartCoroutine(DownloadAndCache(mABHandler));
         }
     }
 
     private IEnumerator DownloadAndCache(ABHandler abHandler)
     {
+        ABUtil.Log("download ab: " + abHandler.ABName());
         // Wait for the Caching system to be ready
         while (!Caching.ready)
             yield return null;
@@ -40,6 +36,7 @@ public class ABDownLoader : MonoBehaviour{
 
             abHandler.Handle(bundle);
             bundle.Unload(false);
+            ABUtil.Log("download finished: " + abHandler.ABName());
 
         } // memory is freed from the web stream (www.Dispose() gets called implicitly)
     }

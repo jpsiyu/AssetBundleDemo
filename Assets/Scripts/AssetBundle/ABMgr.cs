@@ -14,13 +14,14 @@ public class ABMgr : MonoBehaviour {
 	// Use this for initialization
 	private IEnumerator Start () {
         if (ABGlobal.abCheck) {
-            ABUtil.Log("start ab check");
+            ABUtil.Log("start modify ab check");
             yield return StartCoroutine(mABChekcer.StartCheck());
         }
 
-        Debug.Log("download");
-        yield return StartCoroutine(mABDownloader.DownloadAndCacheABList());
+        if (mABChekcer.ModifyABs != null && mABChekcer.ModifyABs.Count > 0) {
+            ABUtil.Log("start download modify ab");
+            yield return StartCoroutine(mABDownloader.DownloadAndCacheABList(mABChekcer.ModifyABs));
+        }
 	}
-	
 
 }
