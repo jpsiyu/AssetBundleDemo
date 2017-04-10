@@ -24,6 +24,10 @@ public class ABMgr : MonoBehaviour {
             ABUtil.Log("finish download modify abs");
             mABChekcer.UpdateClientJsonFile();
         }
+        else
+        {
+            ABUtil.Log("No need do update ab");
+        }
 	}
 
 }
