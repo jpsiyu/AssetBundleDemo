@@ -6,7 +6,7 @@ public class ABChecker : MonoBehaviour {
 
     public IEnumerator StartCheck()
     {
-        string url = Global.abURL + Global.abCompareFileName;
+        string url = ABGlobal.abURL + ABGlobal.abCompareFileName;
         using (WWW www = new WWW(url)) {
             yield return www;
             if (www.error != null)
@@ -18,7 +18,7 @@ public class ABChecker : MonoBehaviour {
 
     private void ReadFile( string text) {
         try {
-            string filePath = Path.Combine(Application.dataPath, Global.abCompareFile);
+            string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
             FileStream fs = new FileStream(filePath, FileMode.Create);
             StreamWriter streamWriter = new StreamWriter(fs);
             streamWriter.Write(text);

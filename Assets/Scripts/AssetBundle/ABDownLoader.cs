@@ -28,7 +28,7 @@ public class ABDownLoader : MonoBehaviour{
             yield return null;
 
         // Load the AssetBundle file from Cache if it exists with the same version or download and store it in the cache
-        using (WWW www = WWW.LoadFromCacheOrDownload(Global.abURL + abHandler.ABName(), Global.abVersion))
+        using (WWW www = WWW.LoadFromCacheOrDownload(ABGlobal.abURL + abHandler.ABName(), ABGlobal.abVersion))
         {
             yield return www;
             if (www.error != null)

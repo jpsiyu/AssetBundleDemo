@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Global {
+public class ABGlobal
+{
     public static bool abCheck = true;
     public static string abURL = "http://192.168.3.60/";
     public static int abVersion = 1;

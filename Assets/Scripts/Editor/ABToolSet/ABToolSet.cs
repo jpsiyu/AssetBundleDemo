@@ -22,7 +22,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     public static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles("Assets/" + Global.abDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+        BuildPipeline.BuildAssetBundles("Assets/" + ABGlobal.abDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ABToolSet : AssetPostprocessor
     /// 生成Json对比文件
     /// </summary>
     public static void GenABCompareFile() {
-        string assetBundlePath = Path.Combine(Application.dataPath, Global.abDirBundle);
+        string assetBundlePath = Path.Combine(Application.dataPath, ABGlobal.abDirBundle);
 
         AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
         if (assetBundle == null)
@@ -58,7 +58,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     /// <param name="abManif"></param>
     private static void GenFile(AssetBundleManifest abManif) {
-        string filePath = Path.Combine(Application.dataPath, Global.abCompareFile);
+        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
 
         FileStream fs = new FileStream(filePath, FileMode.Create);
         StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
@@ -86,7 +86,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     public static void ReadABCompareFile()
     {
-        string filePath = Path.Combine(Application.dataPath, Global.abCompareFile);
+        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
 
         try
         {

@@ -13,7 +13,7 @@ public class ABMgr : MonoBehaviour {
 
 	// Use this for initialization
 	private IEnumerator Start () {
-        Debug.Log("check");
+        ABUtil.Log("check");
         yield return StartCoroutine(mABChekcer.StartCheck());
         Debug.Log("download");
         yield return StartCoroutine(mABDownloader.DownloadAndCacheABList());
