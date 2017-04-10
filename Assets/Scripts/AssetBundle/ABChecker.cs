@@ -24,7 +24,6 @@ public class ABChecker : MonoBehaviour {
             GenServerJsonCollection(www.bytes);
             GenClientJsonCollection();
             CalModifyABs();
-            //UpdateClientJsonFile(www.text);
         }
     }
 
@@ -49,14 +48,16 @@ public class ABChecker : MonoBehaviour {
     /// 将服务器的Json更新到客户端
     /// </summary>
     /// <param name="text"></param>
-    private void UpdateClientJsonFile( string text) {
+    public void UpdateClientJsonFile() {
+        string jsonStr = JsonUtility.ToJson(mServerHashCollection);
         try {
             string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
             FileStream fs = new FileStream(filePath, FileMode.Create);
             StreamWriter streamWriter = new StreamWriter(fs);
-            streamWriter.Write(text);
+            streamWriter.Write(jsonStr);
             streamWriter.Close();
             fs.Close();
+            ABUtil.Log("Update Client Json Compare File Success");
         }
         catch (System.Exception e) {
             throw new System.Exception(e.Message);

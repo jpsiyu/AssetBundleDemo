@@ -19,8 +19,10 @@ public class ABMgr : MonoBehaviour {
         }
 
         if (mABChekcer.ModifyABs != null && mABChekcer.ModifyABs.Count > 0) {
-            ABUtil.Log("start download modify ab");
+            ABUtil.Log("start download modify abs");
             yield return StartCoroutine(mABDownloader.DownloadAndCacheABList(mABChekcer.ModifyABs));
+            ABUtil.Log("finish download modify abs");
+            mABChekcer.UpdateClientJsonFile();
         }
 	}
 

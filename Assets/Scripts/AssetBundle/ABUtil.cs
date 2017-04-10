@@ -27,6 +27,9 @@ public class ABUtil  {
 
             string jsonStr = streamReader.ReadToEnd();
             abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
+
+            streamReader.Close();
+            fs.Close();
         }
         catch (Exception e)
         {
