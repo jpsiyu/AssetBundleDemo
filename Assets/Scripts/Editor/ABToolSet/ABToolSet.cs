@@ -81,26 +81,7 @@ public class ABToolSet : AssetPostprocessor
         fs.Close();
     }
 
-    /// <summary>
-    /// 读取Json对比文件
-    /// </summary>
-    public static void ReadABCompareFile()
-    {
-        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
 
-        try
-        {
-            FileStream fs = new FileStream(filePath, FileMode.Open);
-            StreamReader streamReader = new StreamReader(fs);
-
-            string jsonStr = streamReader.ReadToEnd();
-            Debug.Log("Read Json Success: " + jsonStr);
-            ABHashCollection abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
-        }
-        catch (Exception e) {
-            Debug.LogError(e.Message);
-        }
-    }
 }
 
 

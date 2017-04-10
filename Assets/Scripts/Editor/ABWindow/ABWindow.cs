@@ -5,9 +5,6 @@ using System.IO;
 
 public class ABWindow : EditorWindow {
     private bool groupEnabled;
-    private bool myBool = true;
-    private float myFloat = 1.23f;
-    private float mBtnWidth = 100;
     private float mBtnHeight = 30;
     
     //setting version
@@ -66,7 +63,7 @@ public class ABWindow : EditorWindow {
             EditorGUILayout.BeginHorizontal();
             SetBtn("GetABName", ABToolSet.GetNames);
             SetBtn("GenABCompareFile", ABToolSet.GenABCompareFile);
-            SetBtn("ReadABCompareFile", ABToolSet.ReadABCompareFile);
+            SetBtn("ReadABCompareFile", delegate { ABUtil.ReadABCompareFile(); });
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndToggleGroup();
