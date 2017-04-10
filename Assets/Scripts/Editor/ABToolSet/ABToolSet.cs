@@ -64,10 +64,11 @@ public class ABToolSet : AssetPostprocessor
         StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
 
         ABHashCollection abHashCollection = new ABHashCollection();
-        ABHashInfo abHashInfo = new ABHashInfo();
+        ABHashInfo abHashInfo = null;
         string[] abs = abManif.GetAllAssetBundles();
         for (int i = 0; i < abs.Length; i++)
         {
+            abHashInfo = new ABHashInfo();
             abHashInfo.ab = abs[i];
             abHashInfo.hash = abManif.GetAssetBundleHash(abs[i]).ToString();
             abHashCollection.abHashList.Add(abHashInfo);
