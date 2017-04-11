@@ -55,7 +55,6 @@ public class ABWindow : EditorWindow {
         EditorGUILayout.EndHorizontal();
 
         mBuildPlatform = (ABBuildPlatform)EditorGUILayout.EnumPopup("ABBuildPlatform", mBuildPlatform, GUILayout.ExpandWidth(false));
-        SetBtn("Save", null);
     }
 
 

@@ -94,4 +94,27 @@ public class ABSettings {
         string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
         return filePath;
     }
+
+    /// <summary>
+    /// 获取AB打包平台
+    /// </summary>
+    /// <returns></returns>
+    public static BuildTarget GetBuildTarget() {
+        ABWindow abWindow = EditorWindow.GetWindow(typeof(ABWindow)) as ABWindow;
+        BuildTarget bt = BuildTarget.StandaloneWindows64;
+        switch (abWindow.BuildPlatform) { 
+            case ABBuildPlatform.Win64:
+                bt = BuildTarget.StandaloneWindows64;
+                break;
+            case ABBuildPlatform.Android:
+                bt = BuildTarget.Android;
+                break;
+            case ABBuildPlatform.IOS:
+                bt = BuildTarget.iOS;
+                break;
+            default:
+                break;
+        }
+        return bt;
+    }
 }

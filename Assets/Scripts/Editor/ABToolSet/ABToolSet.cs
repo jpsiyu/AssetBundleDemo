@@ -22,7 +22,8 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     public static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles(ABSettings.AssetBundleBuildPath(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+
+        BuildPipeline.BuildAssetBundles(ABSettings.AssetBundleBuildPath(), BuildAssetBundleOptions.None, ABSettings.GetBuildTarget());
     }
 
     /// <summary>
