@@ -17,7 +17,7 @@ public class ABUtil  {
     /// </summary>
     public static ABHashCollection ReadABCompareFile()
     {
-        ABHashCollection abHashCollection = null;
+        ABHashCollection abHashCollection = new ABHashCollection();
         string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
 
         try
@@ -33,7 +33,7 @@ public class ABUtil  {
         }
         catch (Exception e)
         {
-            Debug.LogError(e.Message);
+            ABUtil.Log(e.Message);
         }
         return abHashCollection;
     }

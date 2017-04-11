@@ -32,7 +32,7 @@ public class ABToolSet : AssetPostprocessor
     {
         var names = AssetDatabase.GetAllAssetBundleNames();
         foreach (var name in names)
-            Debug.Log("AssetBundle: " + name);
+            ABUtil.Log("AssetBundle: " + name);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class ABToolSet : AssetPostprocessor
         AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
         if (assetBundle == null)
         {
-            Debug.LogError("Failed to load AssetBundle!");
+            ABUtil.Log("Failed to load AssetBundle!");
             return;
         }
 
@@ -58,7 +58,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     /// <param name="abManif"></param>
     private static void GenFile(AssetBundleManifest abManif) {
-        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
+        string filePath = Path.Combine(Application.dataPath, Path.Combine(ABGlobal.abDir, ABGlobal.abCompareFileName));
 
         FileStream fs = new FileStream(filePath, FileMode.Create);
         StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
