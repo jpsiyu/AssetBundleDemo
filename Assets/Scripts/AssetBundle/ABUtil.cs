@@ -12,29 +12,4 @@ public class ABUtil  {
         }
     }
 
-    /// <summary>
-    /// 读取Json对比文件
-    /// </summary>
-    public static ABHashCollection ReadABCompareFile()
-    {
-        ABHashCollection abHashCollection = new ABHashCollection();
-        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
-
-        try
-        {
-            FileStream fs = new FileStream(filePath, FileMode.Open);
-            StreamReader streamReader = new StreamReader(fs);
-
-            string jsonStr = streamReader.ReadToEnd();
-            abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
-
-            streamReader.Close();
-            fs.Close();
-        }
-        catch (Exception e)
-        {
-            ABUtil.Log(e.Message);
-        }
-        return abHashCollection;
-    }
 }

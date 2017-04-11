@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class ABChecker : MonoBehaviour {
     private ABHashCollection mServerHashCollection;
@@ -39,8 +40,39 @@ public class ABChecker : MonoBehaviour {
     }
 
     private void GenClientJsonCollection() {
-        mClientHashCollection = ABUtil.ReadABCompareFile();
+        mClientHashCollection =  ReadABCompareFile();
         
+    }
+
+    /// <summary>
+    /// 读取Json对比文件
+    /// </summary>
+    private ABHashCollection ReadABCompareFile()
+    {
+        ABHashCollection abHashCollection = new ABHashCollection();
+        string filePath = ClientCompareFilePath();
+
+        try
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            StreamReader streamReader = new StreamReader(fs);
+
+            string jsonStr = streamReader.ReadToEnd();
+            abHashCollection = JsonUtility.FromJson<ABHashCollection>(jsonStr);
+
+            streamReader.Close();
+            fs.Close();
+        }
+        catch (Exception e)
+        {
+            ABUtil.Log(e.Message);
+        }
+        return abHashCollection;
+    }
+
+    private string ClientCompareFilePath()
+    {
+        return Path.Combine(Application.persistentDataPath, ABGlobal.abCompareFileName);
     }
 
 
@@ -51,7 +83,7 @@ public class ABChecker : MonoBehaviour {
     public void UpdateClientJsonFile() {
         string jsonStr = JsonUtility.ToJson(mServerHashCollection);
         try {
-            string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
+            string filePath = ClientCompareFilePath();
             FileStream fs = new FileStream(filePath, FileMode.Create);
             StreamWriter streamWriter = new StreamWriter(fs);
             streamWriter.Write(jsonStr);

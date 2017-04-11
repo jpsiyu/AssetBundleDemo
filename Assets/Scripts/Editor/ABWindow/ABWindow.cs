@@ -11,6 +11,11 @@ public class ABWindow : EditorWindow {
     private int mVersion = 1;
     private ABBuildPlatform mBuildPlatform = ABBuildPlatform.Win64;
 
+    public ABBuildPlatform BuildPlatform
+    {
+        get { return mBuildPlatform; }
+    }
+
     [MenuItem("Window/ABWindow")]
     public static void ShowWindow()
     {
@@ -35,7 +40,7 @@ public class ABWindow : EditorWindow {
 
     private void BuildAB() {
         GUILayout.Label("Build Asset Bundle");
-        GUILayout.Label("ABPath: " + Path.Combine(Application.dataPath, "AssetBundles"));
+        GUILayout.Label("ABPath: " + ABSettings.AssetBundleBuildPath());
         GUILayout.Label("ABVersion: " + mVersion);
         GUILayout.Label("ABPlatform: " + mBuildPlatform);
         SetBtn("Builde", ABToolSet.BuildAllAssetBundles);
@@ -63,7 +68,7 @@ public class ABWindow : EditorWindow {
             EditorGUILayout.BeginHorizontal();
             SetBtn("GetABName", ABToolSet.GetNames);
             SetBtn("GenABCompareFile", ABToolSet.GenABCompareFile);
-            SetBtn("ReadABCompareFile", delegate { ABUtil.ReadABCompareFile(); });
+            SetBtn("ReadABCompareFile", ABToolSet.ReadABCompareFile);
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndToggleGroup();

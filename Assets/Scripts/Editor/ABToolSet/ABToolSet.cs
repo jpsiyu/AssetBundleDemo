@@ -22,7 +22,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     public static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles("Assets/" + ABGlobal.abDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+        BuildPipeline.BuildAssetBundles(ABSettings.AssetBundleBuildPath(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ABToolSet : AssetPostprocessor
     /// 生成Json对比文件
     /// </summary>
     public static void GenABCompareFile() {
-        string assetBundlePath = Path.Combine(Application.dataPath, ABGlobal.abDirBundle);
+        string assetBundlePath = ABSettings.FolderAssetBundleFetchPath();
 
         AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
         if (assetBundle == null)
@@ -58,7 +58,7 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     /// <param name="abManif"></param>
     private static void GenFile(AssetBundleManifest abManif) {
-        string filePath = Path.Combine(Application.dataPath, Path.Combine(ABGlobal.abDir, ABGlobal.abCompareFileName));
+        string filePath = ABSettings.AssetBundleCompareFilePath();
 
         FileStream fs = new FileStream(filePath, FileMode.Create);
         StreamWriter mStreamWriter = new StreamWriter(fs, System.Text.Encoding.UTF8);
@@ -75,13 +75,36 @@ public class ABToolSet : AssetPostprocessor
         }
 
         string jsonStr = JsonUtility.ToJson(abHashCollection);
-        Debug.Log("Gen Json Success: " + jsonStr);
+        ABUtil.Log("Gen Json Success: " + jsonStr);
         mStreamWriter.Write(jsonStr);
 
         mStreamWriter.Close();
         fs.Close();
     }
 
+    /// <summary>
+    /// 读取本地Local文件的比较文件
+    /// </summary>
+    public static void ReadABCompareFile()
+    {
+        ABHashCollection abHashCollection = new ABHashCollection();
+        string filePath = ABSettings.LocalCompareFilePath();
+
+        try
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            StreamReader streamReader = new StreamReader(fs);
+
+            string jsonStr = streamReader.ReadToEnd();
+            ABUtil.Log("read jsonStr: " + jsonStr);
+            streamReader.Close();
+            fs.Close();
+        }
+        catch (Exception e)
+        {
+            ABUtil.Log(e.Message);
+        }
+    }
 
 }
 
