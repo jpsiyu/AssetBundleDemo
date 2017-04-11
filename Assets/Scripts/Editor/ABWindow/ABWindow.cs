@@ -65,9 +65,10 @@ public class ABWindow : EditorWindow {
 
         if (groupEnabled) {
             EditorGUILayout.BeginHorizontal();
-            SetBtn("GetABName", ABToolSet.GetNames);
-            SetBtn("GenABCompareFile", ABToolSet.GenABCompareFile);
-            SetBtn("ReadABCompareFile", ABToolSet.ReadABCompareFile);
+            SetBtn("GetABNames", ABToolSet.GetNames);
+            SetBtn("GenCompareFile", ABToolSet.GenABCompareFile);
+            SetBtn("ReadCompareFile", ABToolSet.ReadABCompareFile);
+            SetBtn("DeleteCompareFile", ABToolSet.RemoveLocalCompareFile);
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndToggleGroup();

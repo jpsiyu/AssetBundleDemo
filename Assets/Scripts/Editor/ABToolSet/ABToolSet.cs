@@ -107,6 +107,21 @@ public class ABToolSet : AssetPostprocessor
         }
     }
 
+    /// <summary>
+    /// 删除对比文件
+    /// </summary>
+    public static void RemoveLocalCompareFile() { 
+        string filePath = ABSettings.LocalCompareFilePath();
+        try
+        {
+            File.Delete(filePath);
+            ABUtil.Log("Delete AB Compare File Success");
+        }
+        catch (Exception e) {
+            ABUtil.Log(e.Message);
+        }
+    }
+
 }
 
 

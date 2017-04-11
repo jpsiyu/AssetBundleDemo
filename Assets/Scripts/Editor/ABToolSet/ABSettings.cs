@@ -91,7 +91,7 @@ public class ABSettings {
     /// </summary>
     /// <returns></returns>
     public static string LocalCompareFilePath() { 
-        string filePath = Path.Combine(Application.dataPath, ABGlobal.abCompareFile);
+        string filePath = Path.Combine(Application.persistentDataPath, ABGlobal.abCompareFileName);
         return filePath;
     }
 
