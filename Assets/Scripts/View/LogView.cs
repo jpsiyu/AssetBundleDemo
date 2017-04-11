@@ -55,7 +55,9 @@ public class LogView : MonoBehaviour {
     }
 
     private void OnBtnCleanCacheClick() {
+        CleanLog();
         Caching.CleanCache();
+        ABUtil.Log("Clean Cache Success");
     }
 
     private void OnBtnUpdateClick() {
