@@ -22,9 +22,9 @@ public class ABToolSet : AssetPostprocessor
     /// </summary>
     public static void BuildAllAssetBundles()
     {
-
         BuildPipeline.BuildAssetBundles(ABSettings.AssetBundleBuildPath(), BuildAssetBundleOptions.None, ABSettings.GetBuildTarget());
         GenABCompareFile();
+        ClearABCache();
     }
 
     /// <summary>
@@ -138,6 +138,13 @@ public class ABToolSet : AssetPostprocessor
         ABUtil.Log("remove asset bundle success");
     }
 
+    /// <summary>
+    /// 清除AssetBundle缓存
+    /// </summary>
+    public static void ClearABCache() {
+        Caching.CleanCache();
+        ABUtil.Log("Clean Cache Success");
+    }
 }
 
 

@@ -11,6 +11,7 @@ public class LogView : MonoBehaviour {
     private Button mBtnClean;
     private Button mBtnUpdate;
     private Button mBtnFlush;
+    private Button mBtnCleanCache;
 
     private Text config;
 
@@ -20,6 +21,7 @@ public class LogView : MonoBehaviour {
         mBtnClean = transform.FindChild("BtnRoot/ButtonClean").GetComponent<Button>();
         mBtnUpdate = transform.FindChild("BtnRoot/ButtonUpdate").GetComponent<Button>();
         mBtnFlush = transform.FindChild("BtnRoot/ButtonFlush").GetComponent<Button>();
+        mBtnCleanCache = transform.FindChild("BtnRoot/ButtonCleanCache").GetComponent<Button>();
         config = transform.FindChild("Config").GetComponent<Text>();
     }
 
@@ -27,6 +29,7 @@ public class LogView : MonoBehaviour {
         mBtnClean.onClick.AddListener(OnBtnCleanClick);
         mBtnUpdate.onClick.AddListener(OnBtnUpdateClick);
         mBtnFlush.onClick.AddListener(OnBtnFlushClick);
+        mBtnCleanCache.onClick.AddListener(OnBtnCleanCacheClick);
     }
 
     public void AddLog(string logStr) {
@@ -49,6 +52,10 @@ public class LogView : MonoBehaviour {
         {
             GameObject.DestroyImmediate(mLogRoot.transform.GetChild(i).gameObject);
         }
+    }
+
+    private void OnBtnCleanCacheClick() {
+        Caching.CleanCache();
     }
 
     private void OnBtnUpdateClick() {

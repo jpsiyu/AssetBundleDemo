@@ -64,13 +64,18 @@ public class ABWindow : EditorWindow {
         groupEnabled = EditorGUILayout.BeginToggleGroup("Enable ToolSets", groupEnabled);
 
         if (groupEnabled) {
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
             SetBtn("GetABNames", ABToolSet.GetNames);
             SetBtn("GenCompareFile", ABToolSet.GenABCompareFile);
             SetBtn("ReadCompareFile", ABToolSet.ReadABCompareFile);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
             SetBtn("DeleteCompareFile", ABToolSet.RemoveLocalCompareFile);
             SetBtn("DeleteAssetBundle", ABToolSet.RemoveAssetBundle);
+            SetBtn("CleanABCache", ABToolSet.ClearABCache);
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
         EditorGUILayout.EndToggleGroup();
 
