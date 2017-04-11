@@ -7,8 +7,15 @@ public class ABMgr : MonoBehaviour {
     private ABChecker mABChekcer;
 
     private void Awake() {
+        AddLogView();
         mABDownloader = gameObject.AddComponent<ABDownLoader>();
         mABChekcer = gameObject.AddComponent<ABChecker>();
+    }
+
+    private void AddLogView() {
+        if (!ABGlobal.showLogView) return;
+        GameObject logViewPrefab = Resources.Load("Prefab/LogView") as GameObject;
+        GameObject logViewGO = GameObject.Instantiate(logViewPrefab);
     }
 
 	// Use this for initialization
