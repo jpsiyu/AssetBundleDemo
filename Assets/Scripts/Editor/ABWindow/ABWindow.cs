@@ -69,6 +69,7 @@ public class ABWindow : EditorWindow {
             SetBtn("GenCompareFile", ABToolSet.GenABCompareFile);
             SetBtn("ReadCompareFile", ABToolSet.ReadABCompareFile);
             SetBtn("DeleteCompareFile", ABToolSet.RemoveLocalCompareFile);
+            SetBtn("DeleteAssetBundle", ABToolSet.RemoveAssetBundle);
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndToggleGroup();

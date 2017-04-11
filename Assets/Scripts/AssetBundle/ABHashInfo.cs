@@ -33,6 +33,14 @@ public class ABHashCollection
         }
         return modifyABList;
     }
+
+    public List<string> GetNameList() {
+        List<string> nameList = new List<string>();
+        for (int i = 0; i < abHashList.Count; i++) {
+            nameList.Add(abHashList[i].ab);
+        }
+        return nameList;
+    }
 }
 
 public enum ABBuildPlatform { 

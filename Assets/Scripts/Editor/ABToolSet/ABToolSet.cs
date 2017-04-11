@@ -24,6 +24,7 @@ public class ABToolSet : AssetPostprocessor
     {
 
         BuildPipeline.BuildAssetBundles(ABSettings.AssetBundleBuildPath(), BuildAssetBundleOptions.None, ABSettings.GetBuildTarget());
+        GenABCompareFile();
     }
 
     /// <summary>
@@ -120,6 +121,21 @@ public class ABToolSet : AssetPostprocessor
         catch (Exception e) {
             ABUtil.Log(e.Message);
         }
+    }
+
+    /// <summary>
+    /// 删除AssetBundle
+    /// </summary>
+    public static void RemoveAssetBundle() {
+        try
+        {
+            Directory.Delete(ABSettings.AssetBundleFetchPath(), true);
+            Directory.CreateDirectory(ABSettings.AssetBundleFetchPath());
+        }
+        catch (Exception e) {
+            ABUtil.Log(e.Message);
+        }
+        ABUtil.Log("remove asset bundle success");
     }
 
 }

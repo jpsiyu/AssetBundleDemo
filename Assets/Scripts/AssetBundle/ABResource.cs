@@ -11,6 +11,7 @@ public class ABResource  {
         objDict = new Dictionary<string, Object>();
     }
 
+
     public static ABResource Instance {
         get {
             if (mInstance == null)

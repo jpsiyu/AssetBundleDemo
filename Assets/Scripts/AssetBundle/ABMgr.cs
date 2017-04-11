@@ -11,7 +11,7 @@ public class ABMgr : MonoBehaviour {
         mUpdating = false;
         AddLogView();
         mABDownloader = gameObject.AddComponent<ABDownLoader>();
-        mABChekcer = gameObject.AddComponent<ABChecker>();
+        mABChekcer = new ABChecker();
     }
 
     private void AddLogView() {
@@ -42,11 +42,19 @@ public class ABMgr : MonoBehaviour {
         }
         else
         {
-            ABUtil.Log("No need do update ab");
+            ABUtil.Log("Load local Asset bundles");
+            yield return StartCoroutine(LoadLocalAssetBundle());
+            ABUtil.Log("Load local Asset bundles finished");
+
         }
         yield return new WaitForSeconds(1f);
         mUpdating = false;
 	}
+
+    private IEnumerator LoadLocalAssetBundle() {
+        ABHashCollection hashCollection = mABChekcer.ReadABCompareFile();
+        yield return StartCoroutine(mABDownloader.DownloadAndCacheABList(hashCollection.GetNameList()));
+    }
 
     public void UpdateAssetBundle() {
         if (mUpdating) return;

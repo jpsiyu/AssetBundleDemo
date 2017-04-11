@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 
-public class ABChecker : MonoBehaviour {
+public class ABChecker {
     private ABHashCollection mServerHashCollection;
     private ABHashCollection mClientHashCollection;
     private List<string> mModifyABs;
@@ -47,7 +47,7 @@ public class ABChecker : MonoBehaviour {
     /// <summary>
     /// 读取Json对比文件
     /// </summary>
-    private ABHashCollection ReadABCompareFile()
+    public ABHashCollection ReadABCompareFile()
     {
         ABHashCollection abHashCollection = new ABHashCollection();
         string filePath = ClientCompareFilePath();

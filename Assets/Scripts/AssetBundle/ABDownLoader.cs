@@ -18,17 +18,14 @@ public class ABDownLoader : MonoBehaviour{
     public IEnumerator DownloadAndCacheABList(List<string> modifyABs) {
 
         for (int i = 0; i < modifyABs.Count; i++) {
-            if (modifyABs[i].Equals(ABGlobal.abDir))
-                mABHandler = new DefaultAB(modifyABs[i]);
-            else
-                mABHandler = new ConfigAB(modifyABs[i]);
+            mABHandler = new ConfigAB(modifyABs[i]);
             yield return StartCoroutine(DownloadAndCache(mABHandler));
         }
     }
 
     private IEnumerator DownloadAndCache(ABHandler abHandler)
     {
-        ABUtil.Log("download ab: " + abHandler.ABName());
+        ABUtil.Log("download or read ab: " + abHandler.ABName());
         // Wait for the Caching system to be ready
         while (!Caching.ready)
             yield return null;
@@ -54,7 +51,7 @@ public class ABDownLoader : MonoBehaviour{
 
             abHandler.Handle(bundle);
             bundle.Unload(false);
-            ABUtil.Log("download finished: " + abHandler.ABName());
+            ABUtil.Log("download or read finished: " + abHandler.ABName());
 
         } // memory is freed from the web stream (www.Dispose() gets called implicitly)
     }
