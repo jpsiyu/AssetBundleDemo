@@ -9,5 +9,5 @@ public class ABGlobal
     public static string abDir = "AssetBundles";
     public static string abDirBundle = "AssetBundles/AssetBundles";
     public static string abCompareFileName = "ABCompare.json";
-    public static string abCompareFile = "AssetBundles/LocalCompareFile/ABCompare.json";
+    public static string abCompareFile = "AssetBundles/Local/ABCompare.json";
 }
