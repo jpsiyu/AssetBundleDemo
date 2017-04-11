@@ -27,12 +27,18 @@ public class ABDownLoader : MonoBehaviour{
         using (WWW www = WWW.LoadFromCacheOrDownload(ABGlobal.abURL + abHandler.ABName(), ABGlobal.abVersion))
         {
             yield return www;
-            if (www.error != null)
-                throw new System.Exception(string.Format("WWW download error: {0}, name:{1}", www.error, abHandler.ABName()));
+            if (www.error != null) {
+                string err = string.Format("WWW download error: {0}, name:{1}", www.error, abHandler.ABName());
+                ABUtil.Log(err);
+                yield break;
+            }
+          
             
             AssetBundle bundle = www.assetBundle;
-            if (bundle == null)
-                throw new System.Exception("Null bundle: " + abHandler.ABName());
+            if (bundle == null) {
+                ABUtil.Log("Null bundle: " + abHandler.ABName());
+                yield break;
+            }
 
             abHandler.Handle(bundle);
             bundle.Unload(false);
