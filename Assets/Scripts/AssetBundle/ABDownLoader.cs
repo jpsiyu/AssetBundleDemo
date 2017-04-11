@@ -25,7 +25,8 @@ public class ABDownLoader : MonoBehaviour{
 
     private IEnumerator DownloadAndCache(ABHandler abHandler)
     {
-        ABUtil.Log("download or read ab: " + abHandler.ABName());
+        bool cached = Caching.IsVersionCached(ABGlobal.abURL + abHandler.ABName(), ABGlobal.abVersion);
+        ABUtil.Log(cached ? "read ab " : "download ab " + abHandler.ABName());
         // Wait for the Caching system to be ready
         while (!Caching.ready)
             yield return null;
@@ -51,7 +52,7 @@ public class ABDownLoader : MonoBehaviour{
 
             abHandler.Handle(bundle);
             bundle.Unload(false);
-            ABUtil.Log("download or read finished: " + abHandler.ABName());
+            ABUtil.Log(cached ? "finish read ab " : "finish download ab " + abHandler.ABName());
 
         } // memory is freed from the web stream (www.Dispose() gets called implicitly)
     }
