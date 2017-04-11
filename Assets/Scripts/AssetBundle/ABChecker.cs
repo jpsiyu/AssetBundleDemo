@@ -52,6 +52,9 @@ public class ABChecker : MonoBehaviour {
         ABHashCollection abHashCollection = new ABHashCollection();
         string filePath = ClientCompareFilePath();
 
+        if (!File.Exists(filePath))
+            return abHashCollection;
+
         try
         {
             FileStream fs = new FileStream(filePath, FileMode.Open);

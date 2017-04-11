@@ -24,8 +24,7 @@ public class ConfigAB : ABHandler
 
     public override void Handle(AssetBundle ab)
     {
-        string configName = "StdDropInfo";
-        TextAsset textAsset = ab.LoadAsset(configName) as TextAsset;
+        ABResource.Instance.CacheABObject(ab);
     }
 }
 

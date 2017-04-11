@@ -5,8 +5,10 @@ public class ABMgr : MonoBehaviour {
 
     private ABDownLoader mABDownloader;
     private ABChecker mABChekcer;
+    private bool mUpdating;
 
     private void Awake() {
+        mUpdating = false;
         AddLogView();
         mABDownloader = gameObject.AddComponent<ABDownLoader>();
         mABChekcer = gameObject.AddComponent<ABChecker>();
@@ -19,7 +21,8 @@ public class ABMgr : MonoBehaviour {
     }
 
 	// Use this for initialization
-	private IEnumerator Start () {
+	private IEnumerator StartAssetBundleUpdate () {
+        mUpdating = true;
         if (ABGlobal.abCheck) {
             ABUtil.Log("start modify ab check");
             yield return StartCoroutine(mABChekcer.StartCheck());
@@ -29,12 +32,25 @@ public class ABMgr : MonoBehaviour {
             ABUtil.Log("start download modify abs");
             yield return StartCoroutine(mABDownloader.DownloadAndCacheABList(mABChekcer.ModifyABs));
             ABUtil.Log("finish download modify abs");
-            mABChekcer.UpdateClientJsonFile();
+            if (mABDownloader.Err == ABDownLoadError.ERR_None)
+            {
+                mABChekcer.UpdateClientJsonFile();
+            }
+            else {
+                ABUtil.Log("update modify ab failed");
+            }
         }
         else
         {
             ABUtil.Log("No need do update ab");
         }
+        yield return new WaitForSeconds(1f);
+        mUpdating = false;
 	}
+
+    public void UpdateAssetBundle() {
+        if (mUpdating) return;
+        StartCoroutine(StartAssetBundleUpdate());
+    }
 
 }
