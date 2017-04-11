@@ -14,6 +14,7 @@ public class ABChecker {
         get { return mModifyABs; }
     }
 
+
     public IEnumerator StartCheck()
     {
         string url = ABGlobal.abURL + ABGlobal.abCompareFileName;

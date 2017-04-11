@@ -7,6 +7,7 @@ public class ABMgr : MonoBehaviour {
     private ABChecker mABChekcer;
     private bool mUpdating;
 
+
     private void Awake() {
         mUpdating = false;
         AddLogView();
